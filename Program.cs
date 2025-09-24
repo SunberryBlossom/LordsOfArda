@@ -4,7 +4,8 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            StartUI startUI= new StartUI();
+            startUI.StartMenu();
         }
     }
 }
