@@ -9,7 +9,7 @@ namespace LordsOfArda
     internal class StartUI
     {
         // Plays simple intro scene with logo
-        public void IntroScene(string logo)
+        private void DisplayIntroScene(string logo)
         {
             Console.WriteLine(logo);
             Console.WriteLine("Press any key to continue...");
@@ -20,7 +20,7 @@ namespace LordsOfArda
         public void StartMenu()
         {
             string logo = AssetManager.GetAsciiArt(ArtType.Logo);
-            IntroScene(logo);
+            DisplayIntroScene(logo);
             string[] mainMenuOptions = { "New Game", "Load Game","Options","Credits", "Exit" };
             bool isContinue = true;
             while (isContinue)
@@ -41,7 +41,6 @@ namespace LordsOfArda
                         break;
                 }
             }
-
         }
     }
 }
