@@ -8,6 +8,7 @@ namespace LordsOfArda
 {
     internal class StartUI
     {
+        // Plays simple intro scene with logo
         public void IntroScene(string logo)
         {
             Console.WriteLine(logo);
@@ -15,6 +16,7 @@ namespace LordsOfArda
             Console.ReadKey();
             Console.Clear();
         }
+        // First menu shown to player, contains starter options and loops until exit is selected
         public void StartMenu()
         {
             string logo = AssetManager.GetAsciiArt(ArtType.Logo);
