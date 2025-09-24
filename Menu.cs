@@ -6,7 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Labb_7.UI
+namespace LordsOfArda
 {
     internal static class Menu
     {
