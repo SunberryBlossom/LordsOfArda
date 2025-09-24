@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace LordsOfArda
 {
+    // File to store all enums used in the project
     public enum StartMenuOptions
     {
         NewGame,
