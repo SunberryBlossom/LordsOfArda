@@ -65,10 +65,5 @@ namespace LordsOfArda.Saving
                 throw;
             }
         }
-
-        public List<SaveData> GetAllSaves()
-        {
-            return new List<SaveData>();
-        }
     }
 }

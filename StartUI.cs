@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LordsOfArda.Saving;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,8 +22,11 @@ namespace LordsOfArda
                 switch (selectedOption)
                 {
                     case StartMenuOptions.NewGame:
+                        var character = CharacterCreationMenu();
+                        CreateSave(character);
                         break;
                     case StartMenuOptions.LoadGame:
+                        LoadSavesMenu();
                         break;
                     case StartMenuOptions.Options:
                         break;
@@ -52,21 +56,45 @@ namespace LordsOfArda
             Console.ReadKey();
             Console.Clear();
         }
-        private void CreateSaveMenu()
+        private void CreateSave(CharacterMaster createdCharacter)
         {
-            string saveName = Menu.ReadInput("Enter a name for your save file (max 20 characters): ", 20);
+            SaveMaster saveMaster = new SaveMaster();
             // Create a new save file here
             Console.Clear();
-
-            // After creating save file load character creation menu
+            SaveData saveData = new SaveData(createdCharacter);
+            Console.WriteLine("Saving your file!");
+            bool success = saveMaster.SaveGame(saveData);
+            if (success)
+            {
+                Console.WriteLine("Successfully saved!");
+            }
+            // After creating save file 
         }
         private void LoadSavesMenu()
         {
-            // Load and display list of save files here, let user choose one to load
+            SaveMaster saveMaster = new SaveMaster();
+            // Display list of save folders, lets user choose one to load
+            string[] saveDirectories = Directory.GetDirectories(@".\Saves");
+            int chosenDirectoryIndex = Menu.ReadOption("Which character would you like to load save files from?",saveDirectories.Select(item => Path.GetFileName(item)).ToArray());
+            string chosenDirectory = saveDirectories[chosenDirectoryIndex];
+
+            // Display save files within the save folder to load from
+            string[] saveFiles = Directory.GetFiles(chosenDirectory);
+            int chosenFileIndex = Menu.ReadOption("Which save file would you like to load?", saveFiles.Select(item => Path.GetFileName(item)).ToArray());
+            string chosenFile = saveFiles[chosenFileIndex];
+            
+            // Load game data
+            SaveData saveData = saveMaster.LoadGame(chosenFile);
+            Console.WriteLine($"Your character {saveData.Character.Name} has been loaded!");
+            Console.ReadKey();
         }
-        private void CharacterCreationMenu()
+        private CharacterMaster CharacterCreationMenu()
         {
-            string characterName = Menu.ReadInput("Enter your character's name: ", 20);
+            string characterName = Menu.ReadInput("Enter a name for your character (max 20 characters): ", maxLength:20);
+            string characterGender = Menu.ReadInput("What's your gender? (max 20 characters)", maxLength:20);
+            string characterBirthplace = Menu.ReadInput("What's your birthplace? (max 20 characters)", maxLength:20);
+            CharacterMaster createdCharacter = new CharacterMaster(characterName,characterGender,characterBirthplace);
+            return createdCharacter;
         }
     }
 }
