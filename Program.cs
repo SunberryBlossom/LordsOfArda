@@ -6,7 +6,8 @@ namespace LordsOfArda
     {
         static void Main(string[] args)
         {
-
+            StartUI startUI= new StartUI();
+            startUI.StartMenu();
         }
     }
 }
