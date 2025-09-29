@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace LordsOfArda.Scene
 {
-    internal class Scene
+    internal class SceneOption
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public List<SceneOption> Options { get; set; }
-        public Scene() { }
+        public SceneOption() { }
     }
 }
