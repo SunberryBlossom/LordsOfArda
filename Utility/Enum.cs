@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LordsOfArda
+namespace LordsOfArda.Utility
 {
     // File to store all enums used in the project
     public enum StartMenuOptions
