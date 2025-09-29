@@ -9,8 +9,8 @@ namespace LordsOfArda.Saving
     public class SaveData
     {
         public string UUID { get; set; }
-        public CharacterMaster Character { get; set; }
-        public SaveData(CharacterMaster character)
+        public Character Character { get; set; }
+        public SaveData(Character character)
         {
             // Create a new uuid by combining character name together with a short uuid
             string uuid = Guid.NewGuid().ToString("N").Substring(0,8);
