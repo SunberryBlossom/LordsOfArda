@@ -56,7 +56,7 @@ namespace LordsOfArda
             Console.ReadKey();
             Console.Clear();
         }
-        private void CreateSave(CharacterMaster createdCharacter)
+        private void CreateSave(Character createdCharacter)
         {
             SaveMaster saveMaster = new SaveMaster();
             // Create a new save file here
@@ -85,15 +85,15 @@ namespace LordsOfArda
             
             // Load game data
             SaveData saveData = saveMaster.LoadGame(chosenFile);
-            Console.WriteLine($"Your character {saveData.Character.Name} has been loaded!");
+            saveData.Character.PrintInfo();
             Console.ReadKey();
         }
-        private CharacterMaster CharacterCreationMenu()
+        private Character CharacterCreationMenu()
         {
             string characterName = Menu.ReadInput("Enter a name for your character (max 20 characters): ", maxLength:20);
             string characterGender = Menu.ReadInput("What's your gender? (max 20 characters)", maxLength:20);
             string characterBirthplace = Menu.ReadInput("What's your birthplace? (max 20 characters)", maxLength:20);
-            CharacterMaster createdCharacter = new CharacterMaster(characterName,characterGender,characterBirthplace);
+            Character createdCharacter = new Character(characterName,characterGender,characterBirthplace);
             return createdCharacter;
         }
     }

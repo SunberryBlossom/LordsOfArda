@@ -7,26 +7,23 @@ using System.Threading.Tasks;
 
 namespace LordsOfArda
 {
-    internal class Character
+    public class Character
     {
 
-        private string _name;
-        private int _health;
-        private string _gender;
-        private string _title;
-        private string _race;
-        private Stats _stats;
-        private string _birthplace;
+        public string Name { get; set; }
+        public int Health { get; set; } = 100;
+        public string Gender { get; set; }
+        public string Title { get; set; } = "The Curious";
+        public string Race { get; set; } = "Human";
+        public Stats Stats { get; set; } = new Stats(10,10,10,10);
+        public string Birthplace { get; set; }
 
 
-        public  Character (string name, int health, string gender, string title, string birthplace, Stats stats)
+        public  Character (string name, string gender, string birthplace)
         {
-            _name  = name;
-            _health = health;
-            _gender = gender;
-            _title = title;
-            _stats = stats;
-            _birthplace = birthplace;
+            Name  = name;
+            Gender = gender;
+            Birthplace = birthplace;
 
         }
 
@@ -34,8 +31,8 @@ namespace LordsOfArda
 
       public void PrintInfo()
         {
-            Console.WriteLine($"Name: {_name}, Health: {_health}, Gender: {_gender}, Title: {_title}, Birthplace: {_birthplace}, Race: {_race}");
-            Console.WriteLine($"Stats: {_stats}");
+            Console.WriteLine($"Name: {Name}, Health: {Health}, Gender: {Gender}, Title: {Title}, Birthplace: {Birthplace}, Race: {Race}");
+            Console.WriteLine($"Stats: {Stats}");
         }
     }
 }

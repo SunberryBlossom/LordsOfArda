@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LordsOfArda
 {
-    internal class Stats
+    public class Stats
     {
             public int Strength { get; set; }
             public int Agility { get; set; }
