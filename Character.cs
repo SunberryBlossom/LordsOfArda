@@ -27,8 +27,6 @@ namespace LordsOfArda
 
         }
 
-    
-
       public void PrintInfo()
         {
             Console.WriteLine($"Name: {Name}, Health: {Health}, Gender: {Gender}, Title: {Title}, Birthplace: {Birthplace}, Race: {Race}");
