@@ -9,5 +9,7 @@ namespace LordsOfArda
             StartUI startUI= new StartUI();
             startUI.StartMenu();
         }
+
+       
     }
 }
