@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace LordsOfArda
 {
+    // Handles game loop functionality, main game class
     public class GameService
     {
         public void StartGame(Character character)
