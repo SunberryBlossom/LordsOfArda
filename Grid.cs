@@ -59,20 +59,20 @@ namespace LordsOfArda
         public void PrintGrid()
         {
             Console.CursorVisible = false;
-            // Iterate through y,x and write either empty space if no object exists in list or write the gameobjexts charactersign
+            // Iterate through y,x and write either empty space if no object exists in list or write the gameobjects CharacterSign
             for (int i = 0; i < GridArray.GetLength(0); i++)
             {
                 for (int j = 0; j < GridArray.GetLength(1); j++)
                 {
-                    // Check if buffer and original cells list is above 0, if they are return their CharacterSign
-                    var bufferCell = GridArray[i, j];
-                    char bufferChar = bufferCell.Count > 0 ? bufferCell[^1].CharacterSign : ' ';
-                    // If grid is empty, print an empty character, else print the highest object in the list
-                    if (bufferChar != GridTop[i,j])
+                    // Check if buffer and original cells list is above 0, if they are return their CharacterSign, else return empty space
+                    var GridCell = GridArray[i, j];
+                    char GridChar = GridCell.Count > 0 ? GridCell[^1].CharacterSign : ' ';
+                    // If current rendered top layer is different from new top layer, render that position with new character
+                    if (GridChar != GridTop[i,j])
                     {
                         Console.SetCursorPosition(origCol + j, origRow + i);
-                        Console.Write(bufferChar);
-                        GridTop[i, j] = bufferChar;
+                        Console.Write(GridChar);
+                        GridTop[i, j] = GridChar;
                     }
                 }
             }
