@@ -25,7 +25,7 @@ namespace LordsOfArda
         public void StartGame()
         {
             // Create grid and give it gameObjects. In the future grid should be fetched from SaveMaster
-            Grid grid = new Grid(10, 15, _gameObjects);
+            Grid grid = new Grid(20, 100, _gameObjects);
             bool isContinue = true;
             // Begin main game loop
             Console.Clear();
