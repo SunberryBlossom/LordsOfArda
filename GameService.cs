@@ -12,6 +12,7 @@ namespace LordsOfArda
     // Handles game loop functionality, main game class
     public class GameService
     {
+        // Declare variables and set initial data
         private SaveData _saveData;
         private PlayerObject _player;
         private List<GameObject> _gameObjects = new List<GameObject>();
@@ -23,16 +24,18 @@ namespace LordsOfArda
         }
         public void StartGame()
         {
+            // Create grid and give it gameObjects. In the future grid should be fetched from SaveMaster
             Grid grid = new Grid(10, 15, _gameObjects);
             bool isContinue = true;
-            // Main game loop
+            // Begin main game loop
             Console.Clear();
             while (isContinue)
             {
+                // Store old values for refrence when moving character
                 int oldX = _player.X;
                 int oldY = _player.Y;
                 grid.PrintGrid();
-                // This section controls player movement. Might be able to make this into an interface
+                // This section controls player movement. Might be able to make this into an interface or put it somewhere else
                 ConsoleKey movementKey = Console.ReadKey().Key;
                 switch (movementKey)
                 {
@@ -49,6 +52,7 @@ namespace LordsOfArda
                         _player.X++;
                         break;
                 }
+                // check if position has updated, if it has we try to move object. If it fails we revert to old coordinates
                 if (_player.X != oldX || _player.Y != oldY)
                 {
                     bool isMoved = grid.MoveObject(_player, oldX, oldY);
