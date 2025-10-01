@@ -48,10 +48,7 @@ namespace LordsOfArda
                     if (coordinateObjects != null)
                     {
                         // Add all objects on that coordinate to list
-                        foreach (var item in coordinateObjects)
-                        {
-                            GridArray[i, j].Add(item);
-                        }
+                        GridArray[i, j].AddRange(coordinateObjects);
                     }
                 }
             }
