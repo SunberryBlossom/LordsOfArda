@@ -9,6 +9,7 @@ namespace LordsOfArda.Saving
 {
     public class SaveData
     {
+        // Declare variables that should be saves
         public string UUID { get; set; }
         public PlayerObject Player{ get; set; }
         public SaveData(PlayerObject player)

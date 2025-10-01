@@ -28,17 +28,17 @@ namespace LordsOfArda
                 {
                     // Instalize a new List for every coordinate
                     GridArray[i, j] = new List<GameObject>();
-                    // Every corner
+                    // Add every corner
                     if ((i == 0 || i == GridArray.GetLength(0) - 1) && (j == 0 || j == GridArray.GetLength(1) - 1))
                     {
                         GridArray[i, j].Add(new Corner(startX:j,startY:i));
                     }
-                    // Walls upper and lower
+                    // Add walls for upper and lower
                     else if ((i == 0 || i == GridArray.GetLength(0) -1 ) && j < GridArray.GetLength(1) - 1 && j > 0)
                     {
                         GridArray[i, j].Add(new WallHorizontal(startX: j, startY: i));
                     }
-                    // Walls left and right
+                    // Add walls for left and right
                     else if ((j == 0 || j == GridArray.GetLength(1) - 1) && i < GridArray.GetLength(1) - 1 && i > 0)
                     {
                         GridArray[i, j].Add(new WallVertical(startX: j, startY: i));
@@ -60,6 +60,7 @@ namespace LordsOfArda
         public void PrintGrid()
         {
             Console.CursorVisible = false;
+            // Iterate through y,x and write either empty space if no object exists in list or write the gameobjexts charactersign
             for (int i = 0; i < GridArray.GetLength(0); i++)
             {
                 for (int j = 0; j < GridArray.GetLength(1); j++)
@@ -81,6 +82,7 @@ namespace LordsOfArda
 
         public bool MoveObject(GameObject obj, int oldX, int oldY)
         {
+            // Check if player can move over object, if they can we remove old position from List layer and add same object to new position
             if (CanMove(obj))
             {
                 GridArray[oldY, oldX].Remove(obj);
@@ -97,14 +99,7 @@ namespace LordsOfArda
         public bool CanMove(GameObject obj)
         {
             // Check if there is an object in the list that has IsWalkable == false
-            if (GridArray[obj.Y,obj.X].Select(item => item.IsWalkable == false).ToArray().Length > 0)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return GridArray[obj.Y, obj.X].Select(item => item.IsWalkable == false).ToArray().Length <= 0;
         }
 
     }
