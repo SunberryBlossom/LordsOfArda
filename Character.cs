@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LordsOfArda.GameObjects;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -7,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace LordsOfArda
 {
-    public class Character
+    public abstract class Character : GameObject
     {
+        public override char CharacterSign => 'C';
 
         public string Name { get; set; }
         public int Health { get; set; } = 100;
@@ -17,15 +19,6 @@ namespace LordsOfArda
         public string Race { get; set; } = "Human";
         public Stats Stats { get; set; } = new Stats(10,10,10,10);
         public string Birthplace { get; set; }
-
-
-        public  Character (string name, string gender, string birthplace)
-        {
-            Name  = name;
-            Gender = gender;
-            Birthplace = birthplace;
-
-        }
 
       public void PrintInfo()
         {

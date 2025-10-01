@@ -1,4 +1,5 @@
-﻿using LordsOfArda.Saving;
+﻿using LordsOfArda.GameObjects.Objects;
+using LordsOfArda.Saving;
 using LordsOfArda.Utility;
 using System;
 using System.Collections.Generic;
@@ -23,11 +24,13 @@ namespace LordsOfArda
                 switch (selectedOption)
                 {
                     case StartMenuOptions.NewGame:
-                        var character = CharacterCreationMenu();
-                        CreateSave(character);
+                        PlayerObject character = CharacterCreationMenu();
+                        SaveData newGameSave = CreateSave(character);
+                        new GameService(newGameSave).StartGame();
                         break;
                     case StartMenuOptions.LoadGame:
-                        LoadSavesMenu();
+                        var loadGameSave = LoadSavesMenu();
+                        new GameService(loadGameSave).StartGame();
                         break;
                     case StartMenuOptions.Options:
                         break;
@@ -57,7 +60,7 @@ namespace LordsOfArda
             Console.ReadKey();
             Console.Clear();
         }
-        private void CreateSave(Character createdCharacter)
+        private SaveData CreateSave(PlayerObject createdCharacter)
         {
             SaveMaster saveMaster = new SaveMaster();
             // Create a new save file here
@@ -68,10 +71,12 @@ namespace LordsOfArda
             if (success)
             {
                 Console.WriteLine("Successfully saved!");
+                return saveData;
             }
+            return saveData;
             // After creating save file 
         }
-        private void LoadSavesMenu()
+        private SaveData LoadSavesMenu()
         {
             SaveMaster saveMaster = new SaveMaster();
             // Display list of save folders, lets user choose one to load
@@ -86,15 +91,17 @@ namespace LordsOfArda
             
             // Load game data
             SaveData saveData = saveMaster.LoadGame(chosenFile);
-            saveData.Character.PrintInfo();
+            saveData.Player.PrintInfo();
             Console.ReadKey();
+            return saveData;
+
         }
-        private Character CharacterCreationMenu()
+        private PlayerObject CharacterCreationMenu()
         {
             string characterName = Menu.ReadInput("Enter a name for your character (max 20 characters): ", maxLength:20);
             string characterGender = Menu.ReadInput("What's your gender? (max 20 characters)", maxLength:20);
             string characterBirthplace = Menu.ReadInput("What's your birthplace? (max 20 characters)", maxLength:20);
-            Character createdCharacter = new Character(characterName,characterGender,characterBirthplace);
+            PlayerObject createdCharacter = new PlayerObject(characterName,characterGender,characterBirthplace);
             return createdCharacter;
         }
     }
