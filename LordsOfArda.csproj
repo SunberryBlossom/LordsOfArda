@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Grid\" />
     <Folder Include="Scene\Scenes\" />
   </ItemGroup>
 
