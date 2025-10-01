@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LordsOfArda.GameObjects.Objects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,13 +10,13 @@ namespace LordsOfArda.Saving
     public class SaveData
     {
         public string UUID { get; set; }
-        public Character Character { get; set; }
-        public SaveData(Character character)
+        public PlayerObject Player{ get; set; }
+        public SaveData(PlayerObject player)
         {
             // Create a new uuid by combining character name together with a short uuid
             string uuid = Guid.NewGuid().ToString("N").Substring(0,8);
-            UUID = $"{character.Name}_{uuid}";
-            Character = character;
+            UUID = $"{player.Name}_{uuid}";
+            Player = player;
         }
     }
 }

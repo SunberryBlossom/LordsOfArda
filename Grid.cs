@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LordsOfArda.GameObjects;
+using LordsOfArda.GameObjects.Objects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -10,80 +12,98 @@ namespace LordsOfArda
     // Grid class sets a grid with a 2d char array and keeps track of where player is inside this. It also paints every character in the array.
     internal class Grid
     {
-        public char[,] GridArray { get; set; }
-        public int _playerX = 1;
-        public int _playerY = 1;
+        // Declare variables. GridArray is a 2D array with a list for x and y coordinates. List is responsible for layering.
+        public List<GameObject>[,] GridArray { get; set; }
         protected int origRow = Console.CursorTop;
         protected int origCol = Console.CursorTop;
 
-        public int PlayerX
+        public Grid(int height, int width, List<GameObject> gameObjects)
         {
-            get { return _playerX; }
-            set
-            {
-                if (value < 0 || value >= GridArray.GetLength(0))
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value), "Value must be in range of GridArray");
-                }
-                _playerX = value;
-            }
-        }
-        public int PlayerY
-        {
-            get { return _playerY; }
-            set
-            {
-                if (value < 0 || value >= GridArray.GetLength(1))
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value), "Value must be in range of GridArray");
-                }
-                _playerX = value;
-            }
-        }
-        public Grid(int height, int width)
-        {
-            GridArray = new char[height, width];
-            // Fill array with walls, corners and empty space on start
+            GridArray = new List<GameObject>[height, width];
+
+            // For loop iterates through grids height and width
             for (int i = 0; i < GridArray.GetLength(0); i++)
             {
                 for (int j = 0; j < GridArray.GetLength(1); j++)
                 {
+                    // Instalize a new List for every coordinate
+                    GridArray[i, j] = new List<GameObject>();
                     // Every corner
                     if ((i == 0 || i == GridArray.GetLength(0) - 1) && (j == 0 || j == GridArray.GetLength(1) - 1))
                     {
-                        GridArray[i, j] = '+';
+                        GridArray[i, j].Add(new Corner(startX:j,startY:i));
                     }
                     // Walls upper and lower
                     else if ((i == 0 || i == GridArray.GetLength(0) -1 ) && j < GridArray.GetLength(1) - 1 && j > 0)
                     {
-                        GridArray[i, j] = '-';
+                        GridArray[i, j].Add(new WallHorizontal(startX: j, startY: i));
                     }
                     // Walls left and right
                     else if ((j == 0 || j == GridArray.GetLength(1) - 1) && i < GridArray.GetLength(1) - 1 && i > 0)
                     {
-                        GridArray[i, j] = '|';
+                        GridArray[i, j].Add(new WallVertical(startX: j, startY: i));
                     }
-                    else
+                    // Get potenial game objects for that coordinate
+                    GameObject[] coordinateObjects = gameObjects.TakeWhile(item => item.X == j && item.Y == i).ToArray();
+                    if (coordinateObjects != null)
                     {
-                        // Empty Space
-                        GridArray[i, j] = ' ';
+                        // Add all objects on that coordinate to list
+                        foreach (var item in coordinateObjects)
+                        {
+                            GridArray[i, j].Add(item);
+                        }
                     }
-                    GridArray[PlayerX, PlayerY] = 'o';
                 }
             }
         }
 
         public void PrintGrid()
         {
-            Console.Clear();
+            Console.CursorVisible = false;
             for (int i = 0; i < GridArray.GetLength(0); i++)
             {
                 for (int j = 0; j < GridArray.GetLength(1); j++)
                 {
-                    Console.SetCursorPosition(origCol+j,origRow+i);
-                    Console.Write(GridArray[i, j]);
+                    Console.SetCursorPosition(origCol + j, origRow + i);
+                    // If grid is empty, print an empty character, else print the highest object in the list
+                    if (GridArray[i,j].Count == 0)
+                    {
+                        Console.Write(' ');
+                    }
+                    else
+                    {
+                        Console.Write(GridArray[i, j][^1].CharacterSign);
+                    }
                 }
-                Console.WriteLine("");
+            }
+            Console.CursorVisible = false;
+        }
+
+        public bool MoveObject(GameObject obj, int oldX, int oldY)
+        {
+            if (CanMove(obj))
+            {
+                GridArray[oldY, oldX].Remove(obj);
+                GridArray[obj.Y, obj.X].Add(obj);
+                PrintGrid();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CanMove(GameObject obj)
+        {
+            // Check if there is an object in the list that has IsWalkable == false
+            if (GridArray[obj.Y,obj.X].Select(item => item.IsWalkable == false).ToArray().Length > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
 
