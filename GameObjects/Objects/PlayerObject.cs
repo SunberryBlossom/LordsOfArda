@@ -8,13 +8,12 @@ namespace LordsOfArda.GameObjects.Objects
 {
     public class PlayerObject : Character
     {
-        public override string CharacterSign => "😁";
+        public override string CharacterSign => "🧙";
         public PlayerObject(string name, string gender, string birthplace)
         {
             Name = name;
             Gender = gender;
             Birthplace = birthplace;
-
         }
     }
 }
