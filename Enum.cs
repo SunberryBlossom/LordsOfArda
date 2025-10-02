@@ -18,6 +18,7 @@ namespace LordsOfArda
     public enum ArtType
     {
         None,
-        Logo
+        Image,
+        Animation
     }
 }

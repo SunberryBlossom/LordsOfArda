@@ -49,5 +49,10 @@ namespace LordsOfArda
             }
             return "";
         }
+
+        public static void PlayAsciiAnimation()
+        {
+
+        }
     }
 }

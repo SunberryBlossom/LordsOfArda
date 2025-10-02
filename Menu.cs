@@ -16,8 +16,9 @@ namespace LordsOfArda
             int i = 0;
             while (true)
             {
+                if (true) Console.WriteLine("hello");
                 Console.Clear();
-                Console.WriteLine(questionText+"\n");
+                Console.WriteLine(questionText + "\n");
                 for (int j = 0; j < menuOptions.Length; j++)
                 {
                     Console.BackgroundColor = i == j ? ConsoleColor.White : ConsoleColor.Black;
@@ -30,7 +31,7 @@ namespace LordsOfArda
                 switch (key)
                 {
                     case ConsoleKey.DownArrow:
-                        if (i < menuOptions.Length-1) i++;
+                        if (i < menuOptions.Length - 1) i++;
                         break;
                     case ConsoleKey.UpArrow:
                         if (i > 0) i--;
@@ -83,7 +84,7 @@ namespace LordsOfArda
                 Console.Clear();
                 Console.WriteLine(questionText + "\n");
                 var sliderStructure = new StringBuilder(menuOptions[i]);
-                if (i > 0) sliderStructure.Insert(0,"<- ");
+                if (i > 0) sliderStructure.Insert(0, "<- ");
                 if (i < menuOptions.Length) sliderStructure.Append(" ->");
                 Console.WriteLine(sliderStructure);
                 ConsoleKey key = Console.ReadKey().Key;
