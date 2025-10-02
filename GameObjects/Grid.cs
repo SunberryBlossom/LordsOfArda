@@ -67,11 +67,27 @@ namespace LordsOfArda.GameObjects
                     var GridCell = GridArray[i, j];
                     string GridChar = GridCell.Count > 0 ? GridCell[^1].CharacterSign : " ";
                     // If current rendered top layer is different from new top layer, render that position with new character and add the character to GridTop
-                    if (GridChar != GridTop[i,j].ToString())
+
+                    // check if GridChar is long that two
+                    if (GridChar.Length == 2)
                     {
-                        Console.SetCursorPosition(origCol + j, origRow + i);
-                        Console.Write(GridChar);
-                        GridTop[i, j] = GridChar[0];
+                        if (GridChar != $"{GridTop[i, j]}{GridTop[i+1, j+1]}")
+                        {
+                            Console.SetCursorPosition(origCol + j, origRow + i);
+                            Console.Write(GridChar);
+                            GridTop[i, j] = GridChar[0];
+                            GridTop[i, j + 1] = GridChar[1];
+                            j++;
+                        }
+                    }
+                    else if(GridChar.Length == 1)
+                    {
+                        if (GridChar[0] != GridTop[i, j])
+                        {
+                            Console.SetCursorPosition(origCol + j, origRow + i);
+                            Console.Write(GridChar);
+                            GridTop[i, j] = GridChar[0];
+                        }
                     }
                 }
             }
