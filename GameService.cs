@@ -37,7 +37,7 @@ namespace LordsOfArda
                 grid.PrintGrid();
                 // This section controls player movement. Might be able to make this into an interface or put it somewhere else
                 // TODO: Add ability to move in two directions at once
-                ConsoleKey movementKey = Console.ReadKey().Key;
+                ConsoleKey movementKey = Console.ReadKey(true).Key;
                 switch (movementKey)
                 {
                     case ConsoleKey.UpArrow:
