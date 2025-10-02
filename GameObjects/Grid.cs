@@ -114,7 +114,7 @@ namespace LordsOfArda.GameObjects
             bool charOne = GridArray[obj.Y, obj.X].Select(item => item.IsWalkable == false).ToArray().Length == 0;
             if (obj.CharacterSign.Length > 1 && oldX-obj.X == -1)
             {
-                bool charTwo = GridArray[obj.Y, obj.X + obj.CharacterSign.Length - 1].Select(item => item.IsWalkable == false).ToArray().Length == 0;
+                bool charTwo = GridArray[obj.Y, obj.X + 1].Select(item => item.IsWalkable == false).ToArray().Length == 0;
                 if (charTwo)
                 {
                     return true;
