@@ -67,7 +67,7 @@ namespace LordsOfArda.GameObjects
                     var GridCell = GridArray[i, j];
                     string GridChar = GridCell.Count > 0 ? GridCell[^1].CharacterSign : " ";
                     // If current rendered top layer is different from new top layer, render that position with new character and add the character to GridTop
-                    if (GridChar.Length == 2)
+                    if (GridChar.Length > 1)
                     {
                         if (GridChar != $"{GridTop[i, j]}{GridTop[i+1, j+1]}")
                         {
@@ -75,7 +75,7 @@ namespace LordsOfArda.GameObjects
                             Console.Write(GridChar);
                             GridTop[i, j] = GridChar[0];
                             GridTop[i, j + 1] = GridChar[1];
-                            j++;
+                            j += GridChar.Length -1;
                         }
                     }
                     else if(GridChar.Length == 1)
@@ -112,9 +112,9 @@ namespace LordsOfArda.GameObjects
         {
             // Check if there is an object in the list layer that has IsWalkable == false
             bool charOne = GridArray[obj.Y, obj.X].Select(item => item.IsWalkable == false).ToArray().Length == 0;
-            if (obj.CharacterSign.Length == 2 && oldX-obj.X == -1)
+            if (obj.CharacterSign.Length > 1 && oldX-obj.X == -1)
             {
-                bool charTwo = GridArray[obj.Y, obj.X + 1].Select(item => item.IsWalkable == false).ToArray().Length == 0;
+                bool charTwo = GridArray[obj.Y, obj.X + obj.CharacterSign.Length - 1].Select(item => item.IsWalkable == false).ToArray().Length == 0;
                 if (charTwo)
                 {
                     return true;
