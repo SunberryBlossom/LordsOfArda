@@ -16,6 +16,7 @@ namespace LordsOfArda
         private SaveData _saveData;
         private PlayerObject _player;
         private Corner corner = new Corner(3,3);
+        private WallVertical wall = new WallVertical(5, 5);
         private List<GameObject> _gameObjects = new List<GameObject>();
         public GameService(SaveData save)
         {
@@ -24,6 +25,7 @@ namespace LordsOfArda
             _player.X = 10;
             _player.Y = 10;
             _gameObjects.Add(corner);
+            _gameObjects.Add(wall);
             _gameObjects.Add(_player);
         }
         public void StartGame()
