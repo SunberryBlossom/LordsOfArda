@@ -10,7 +10,7 @@ namespace LordsOfArda
 {
     public abstract class Character : GameObject
     {
-        public override char CharacterSign => 'C';
+        public override string CharacterSign => "C";
 
         public string Name { get; set; }
         public int Health { get; set; } = 100;

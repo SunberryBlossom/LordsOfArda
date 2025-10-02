@@ -9,7 +9,7 @@ namespace LordsOfArda.GameObjects
     // Abstract class that is used for the Grid
     public abstract class GameObject
     {
-        public abstract char CharacterSign { get; }
+        public abstract string CharacterSign { get; }
         public int X { get; set; }
         public int Y { get; set; }
 
