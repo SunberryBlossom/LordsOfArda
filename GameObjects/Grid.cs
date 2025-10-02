@@ -45,7 +45,7 @@ namespace LordsOfArda.GameObjects
                         GridArray[i, j].Add(new WallVertical(startX: j, startY: i));
                     }
                     // Get potenial game objects for that coordinate
-                    GameObject[] coordinateObjects = gameObjects.TakeWhile(item => item.X == j && item.Y == i).ToArray();
+                    GameObject[] coordinateObjects = gameObjects.Where(item => item.X == j && item.Y == i).ToArray();
                     if (coordinateObjects != null && coordinateObjects.Length > 0)
                     {
                         // Add all objects on that coordinate to list
