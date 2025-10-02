@@ -110,8 +110,11 @@ namespace LordsOfArda.GameObjects
 
         public bool CanMove(GameObject obj, int oldX, int oldY)
         {
-            if (obj.CharacterSign.Length > 1 && oldX-obj.X == -1 && oldY-obj.Y == 0)
+            // obj.X and obj.Y is where player currently wants to move. Note that emojis renders a bit with at like 1.5 of a console index. So they may be 5 characters, but actual space they need is less than 2.
+            // If GameObject CharacterSign is 2 or more we check collision at 1 more index to the right.
+            if (obj.CharacterSign.Length >= 2 && oldX-obj.X == -1 && oldY-obj.Y == 0)
             {
+                // Check if there is an object in the list layer that has IsWalkable == false.
                 bool charOne = GridArray[obj.Y, obj.X + 1].Select(item => item.IsWalkable == false).ToArray().Length == 0;
                 if (charOne)
                 {
@@ -122,8 +125,10 @@ namespace LordsOfArda.GameObjects
                     return false;
                 }
             }
-            if (obj.CharacterSign.Length > 1 && oldY - obj.Y != 0)
+            // If gameObjects charactersign is 2 or more we check collision on Y level.
+            else if (obj.CharacterSign.Length >= 2 && oldY - obj.Y != 0)
             {
+                // Future implementation would be better to check multiple spaces at once.
                 bool charOne = GridArray[obj.Y, obj.X].Select(item => item.IsWalkable == false).ToArray().Length == 0;
                 bool charTwo = GridArray[obj.Y, obj.X + 1].Select(item => item.IsWalkable == false).ToArray().Length == 0;
                 if (charOne && charTwo)
@@ -135,9 +140,9 @@ namespace LordsOfArda.GameObjects
                     return false;
                 }
             }
+            // Check where object wants to be moved and check if there is an object there
             else
             {
-                // Check if there is an object in the list layer that has IsWalkable == false
                 bool charOne = GridArray[obj.Y, obj.X].Select(item => item.IsWalkable == false).ToArray().Length == 0;
                 return charOne;
             }
