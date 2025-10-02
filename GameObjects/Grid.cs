@@ -110,12 +110,23 @@ namespace LordsOfArda.GameObjects
 
         public bool CanMove(GameObject obj, int oldX, int oldY)
         {
-            // Check if there is an object in the list layer that has IsWalkable == false
-            bool charOne = GridArray[obj.Y, obj.X].Select(item => item.IsWalkable == false).ToArray().Length == 0;
-            if (obj.CharacterSign.Length > 1 && oldX-obj.X == -1)
+            if (obj.CharacterSign.Length > 1 && oldX-obj.X == -1 && oldY-obj.Y == 0)
             {
+                bool charOne = GridArray[obj.Y, obj.X + 1].Select(item => item.IsWalkable == false).ToArray().Length == 0;
+                if (charOne)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            if (obj.CharacterSign.Length > 1 && oldY - obj.Y != 0)
+            {
+                bool charOne = GridArray[obj.Y, obj.X].Select(item => item.IsWalkable == false).ToArray().Length == 0;
                 bool charTwo = GridArray[obj.Y, obj.X + 1].Select(item => item.IsWalkable == false).ToArray().Length == 0;
-                if (charTwo)
+                if (charOne && charTwo)
                 {
                     return true;
                 }
@@ -126,9 +137,10 @@ namespace LordsOfArda.GameObjects
             }
             else
             {
+                // Check if there is an object in the list layer that has IsWalkable == false
+                bool charOne = GridArray[obj.Y, obj.X].Select(item => item.IsWalkable == false).ToArray().Length == 0;
                 return charOne;
             }
-            return false;
         }
 
     }
