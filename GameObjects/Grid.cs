@@ -1,5 +1,4 @@
-﻿using LordsOfArda.GameObjects;
-using LordsOfArda.GameObjects.Objects;
+﻿using LordsOfArda.GameObjects.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +6,12 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LordsOfArda
+namespace LordsOfArda.GameObjects
 {
     // Grid class sets a grid with a 2d char array and keeps track of where player is inside this. It also paints every character in the array.
     internal class Grid
     {
-        // Declare variables. GridArray is a 2D array with a list for x and y coordinates. List is responsible for layering.
+        // Declare variables. GridArray is a 2D array with a list for x and y coordinates. List is responsible for layering objects on top of eachother.
         public List<GameObject>[,] GridArray { get; set; }
         public char[,] GridTop { get; set; }
         protected int origRow = Console.CursorLeft;
@@ -97,7 +96,7 @@ namespace LordsOfArda
 
         public bool CanMove(GameObject obj)
         {
-            // Check if there is an object in the list that has IsWalkable == false
+            // Check if there is an object in the list layer that has IsWalkable == false
             return GridArray[obj.Y, obj.X].Select(item => item.IsWalkable == false).ToArray().Length <= 0;
         }
 
