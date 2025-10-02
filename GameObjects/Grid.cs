@@ -67,8 +67,6 @@ namespace LordsOfArda.GameObjects
                     var GridCell = GridArray[i, j];
                     string GridChar = GridCell.Count > 0 ? GridCell[^1].CharacterSign : " ";
                     // If current rendered top layer is different from new top layer, render that position with new character and add the character to GridTop
-
-                    // check if GridChar is long that two
                     if (GridChar.Length == 2)
                     {
                         if (GridChar != $"{GridTop[i, j]}{GridTop[i+1, j+1]}")
@@ -97,7 +95,7 @@ namespace LordsOfArda.GameObjects
         public bool MoveObject(GameObject obj, int oldX, int oldY)
         {
             // Check if player can move over object, if they can we remove old position from List layer and add same object to new position
-            if (CanMove(obj))
+            if (CanMove(obj,oldX,oldY))
             {
                 GridArray[oldY, oldX].Remove(obj);
                 GridArray[obj.Y, obj.X].Add(obj);
@@ -110,10 +108,27 @@ namespace LordsOfArda.GameObjects
             }
         }
 
-        public bool CanMove(GameObject obj)
+        public bool CanMove(GameObject obj, int oldX, int oldY)
         {
             // Check if there is an object in the list layer that has IsWalkable == false
-            return GridArray[obj.Y, obj.X].Select(item => item.IsWalkable == false).ToArray().Length <= 0;
+            bool charOne = GridArray[obj.Y, obj.X].Select(item => item.IsWalkable == false).ToArray().Length == 0;
+            if (obj.CharacterSign.Length == 2 && oldX-obj.X == -1)
+            {
+                bool charTwo = GridArray[obj.Y, obj.X + 1].Select(item => item.IsWalkable == false).ToArray().Length == 0;
+                if (charTwo)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return charOne;
+            }
+            return false;
         }
 
     }
