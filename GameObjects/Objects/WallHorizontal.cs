@@ -12,6 +12,6 @@ namespace LordsOfArda.GameObjects.Objects
         {
         }
 
-        public override char CharacterSign => '-';
+        public override string CharacterSign => "-";
     }
 }

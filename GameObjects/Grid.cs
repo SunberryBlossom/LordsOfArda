@@ -65,13 +65,13 @@ namespace LordsOfArda.GameObjects
                 {
                     // Check if buffer and original cells list is above 0, if they are return their CharacterSign, else return empty space
                     var GridCell = GridArray[i, j];
-                    char GridChar = GridCell.Count > 0 ? GridCell[^1].CharacterSign : ' ';
+                    string GridChar = GridCell.Count > 0 ? GridCell[^1].CharacterSign : " ";
                     // If current rendered top layer is different from new top layer, render that position with new character and add the character to GridTop
-                    if (GridChar != GridTop[i,j])
+                    if (GridChar != GridTop[i,j].ToString())
                     {
                         Console.SetCursorPosition(origCol + j, origRow + i);
                         Console.Write(GridChar);
-                        GridTop[i, j] = GridChar;
+                        GridTop[i, j] = GridChar[0];
                     }
                 }
             }
