@@ -75,7 +75,7 @@ namespace LordsOfArda.GameObjects
                             Console.Write("\u001b[48;2;34;139;34m" + GridChar + "\u001b[0m");
                             GridTop[i, j] = GridChar[0];
                             GridTop[i, j + 1] = GridChar[1];
-                            j += 1;
+                            j++;
                         }
                     }
                     else if(GridChar.Length == 1)
