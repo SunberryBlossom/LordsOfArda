@@ -115,35 +115,20 @@ namespace LordsOfArda.GameObjects
             if (obj.CharacterSign.Length >= 2 && oldX-obj.X == -1 && oldY-obj.Y == 0)
             {
                 // Check if there is an object in the list layer that has IsWalkable == false.
-                bool charOne = GridArray[obj.Y, obj.X + 1].Select(item => item.IsWalkable == false).ToArray().Length == 0;
-                if (charOne)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                bool charOne = GridArray[obj.Y, obj.X + 1].All(item => item.IsWalkable);
+                return charOne;
             }
             // If gameObjects charactersign is 2 or more we check collision on Y level.
             else if (obj.CharacterSign.Length >= 2 && oldY - obj.Y != 0)
             {
-                // Future implementation would be better to check multiple spaces at once.
-                bool charOne = GridArray[obj.Y, obj.X].Select(item => item.IsWalkable == false).ToArray().Length == 0;
-                bool charTwo = GridArray[obj.Y, obj.X + 1].Select(item => item.IsWalkable == false).ToArray().Length == 0;
-                if (charOne && charTwo)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                // Checks if all items are walkable, otherwise returns walkable as false
+                bool walkable = Enumerable.Range(0,obj.Width+1).All(offset => GridArray[obj.Y, obj.X + offset].All(item => item.IsWalkable));
+                return walkable;
             }
             // Check where object wants to be moved and check if there is an object there
             else
             {
-                bool charOne = GridArray[obj.Y, obj.X].Select(item => item.IsWalkable == false).ToArray().Length == 0;
+                bool charOne = GridArray[obj.Y, obj.X].All(item => item.IsWalkable);
                 return charOne;
             }
         }
