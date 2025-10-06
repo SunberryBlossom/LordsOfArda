@@ -72,7 +72,7 @@ namespace LordsOfArda.GameObjects
                         if (GridChar != $"{GridTop[i, j]}{GridTop[i+1, j+1]}")
                         {
                             Console.SetCursorPosition(origCol + j, origRow + i);
-                            Console.Write(GridChar);
+                            Console.Write("\u001b[48;2;34;139;34m" + GridChar + "\u001b[0m");
                             GridTop[i, j] = GridChar[0];
                             GridTop[i, j + 1] = GridChar[1];
                             j += GridChar.Length -1;
@@ -83,7 +83,7 @@ namespace LordsOfArda.GameObjects
                         if (GridChar[0] != GridTop[i, j])
                         {
                             Console.SetCursorPosition(origCol + j, origRow + i);
-                            Console.Write(GridChar);
+                            Console.Write("\u001b[48;2;34;139;34m" + GridChar + "\u001b[0m");
                             GridTop[i, j] = GridChar[0];
                         }
                     }

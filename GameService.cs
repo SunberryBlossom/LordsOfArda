@@ -27,11 +27,12 @@ namespace LordsOfArda
             _gameObjects.Add(corner);
             _gameObjects.Add(wall);
             _gameObjects.Add(_player);
+            _gameObjects.Add(new House(10,10));
         }
         public void StartGame()
         {
             // Create grid and give it gameObjects. In the future grid should be fetched from SaveMaster
-            Grid grid = new Grid(20, 100, _gameObjects);
+            Grid grid = new Grid(20, 20, _gameObjects);
             bool isContinue = true;
             // Begin main game loop
             Console.Clear();
@@ -42,7 +43,6 @@ namespace LordsOfArda
                 int oldY = _player.Y;
                 grid.PrintGrid();
                 // This section controls player movement. Might be able to make this into an interface or put it somewhere else
-                // TODO: Add ability to move in two directions at once
                 ConsoleKey movementKey = Console.ReadKey(true).Key;
                 switch (movementKey)
                 {
