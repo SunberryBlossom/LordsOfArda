@@ -110,27 +110,28 @@ namespace LordsOfArda.GameObjects
 
         public bool CanMove(GameObject obj, int oldX, int oldY)
         {
-            // obj.X and obj.Y is where player currently wants to move. Note that emojis renders a bit with at like 1.5 of a console index. So they may be 5 characters, but actual space they need is less than 2.
-            // If GameObject CharacterSign is 2 or more we check collision at 1 more index to the right.
-            if (obj.CharacterSign.Length >= 2 && oldX-obj.X == -1 && oldY-obj.Y == 0)
+            // If object wants to move to the right, check if there is any object there in the way
+            if (oldX-obj.X == -1 && oldY == obj.Y)
+            {
+                // Check every object to the right with the width of character to see if they are walkable
+                bool walkable = Enumerable.Range(0, obj.Width + 1).All(offset => GridArray[obj.Y, obj.X + offset].All(item => item.IsWalkable));
+                return walkable;
+            }
+            // If object wants to move to the left, check if there is any object there in the way
+            else if (oldX - obj.X == 1 && oldY == obj.Y)
             {
                 // Check if there is an object in the list layer that has IsWalkable == false.
-                bool charOne = GridArray[obj.Y, obj.X + 1].All(item => item.IsWalkable);
+                bool charOne = GridArray[obj.Y, obj.X - obj.Width].All(item => item.IsWalkable);
                 return charOne;
             }
-            // If gameObjects charactersign is 2 or more we check collision on Y level.
-            else if (obj.CharacterSign.Length >= 2 && oldY - obj.Y != 0)
+            // If object wants to move up or down, check if there is any object there in the way
+            else if (oldY - obj.Y != 0 && oldX == obj.X)
             {
                 // Checks if all items are walkable, otherwise returns walkable as false
                 bool walkable = Enumerable.Range(0,obj.Width+1).All(offset => GridArray[obj.Y, obj.X + offset].All(item => item.IsWalkable));
                 return walkable;
             }
-            // Check where object wants to be moved and check if there is an object there
-            else
-            {
-                bool charOne = GridArray[obj.Y, obj.X].All(item => item.IsWalkable);
-                return charOne;
-            }
+            return false;
         }
 
     }
