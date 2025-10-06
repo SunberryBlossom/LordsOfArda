@@ -10,14 +10,15 @@ namespace LordsOfArda
 {
     internal static class Menu
     {
-        // Helper method to show alternatives that can be selected with arrow keys and enter
-        public static T ReadOption<T>(string questionText, string[] menuOptions) where T : Enum
+        // Helper method to show alternatives that can be selected with arrow keys and enter, made to return an Enum
+        public static TEnum ReadOption<T, TEnum>(string questionText, T[] menuOptions) where TEnum : Enum
         {
             int i = 0;
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine(questionText+"\n");
+                // Write out question and display options, currently selected index gets highlighted
+                Console.WriteLine(questionText + "\n");
                 for (int j = 0; j < menuOptions.Length; j++)
                 {
                     Console.BackgroundColor = i == j ? ConsoleColor.White : ConsoleColor.Black;
@@ -26,24 +27,27 @@ namespace LordsOfArda
                     Console.BackgroundColor = ConsoleColor.Black;
                     Console.ForegroundColor = ConsoleColor.White;
                 }
+                // Reset color and read the key that user presses
+                Console.ResetColor();
                 ConsoleKey key = Console.ReadKey().Key;
+                // Check what user pressed and go up or down in index as long as it is within the length of menuOptions. Enter returns Enum
                 switch (key)
                 {
                     case ConsoleKey.DownArrow:
-                        if (i < menuOptions.Length-1) i++;
+                        if (i < menuOptions.Length - 1) i++;
                         break;
                     case ConsoleKey.UpArrow:
                         if (i > 0) i--;
                         break;
                     case ConsoleKey.Enter:
                         // returns specified enum
-                        return (T)Enum.ToObject(typeof(T), i);
+                        return (TEnum)Enum.ToObject(typeof(TEnum), i);
 
                 }
             }
         }
-        // Helper method to show alternatives that can be selected with arrow keys and enter, made for int
-        public static int ReadOption(string questionText, string[] menuOptions)
+        // Helper method to show alternatives that can be selected with arrow keys and enter, made to return int
+        public static int ReadOptionIndex<T>(string questionText, T[] menuOptions)
         {
             int i = 0;
             while (true)
@@ -83,7 +87,7 @@ namespace LordsOfArda
                 Console.Clear();
                 Console.WriteLine(questionText + "\n");
                 var sliderStructure = new StringBuilder(menuOptions[i]);
-                if (i > 0) sliderStructure.Insert(0,"<- ");
+                if (i > 0) sliderStructure.Insert(0, "<- ");
                 if (i < menuOptions.Length) sliderStructure.Append(" ->");
                 Console.WriteLine(sliderStructure);
                 ConsoleKey key = Console.ReadKey().Key;
@@ -114,12 +118,12 @@ namespace LordsOfArda
                     (bool, string) verifyInput = VerifyString(userInput, minLength, maxLength);
                     if (verifyInput.Item1)
                     {
-                        Console.WriteLine(verifyInput.Item2);
+                        DisplayStatus(verifyInput.Item2, ConsoleColor.Green);
                         return userInput;
                     }
                     else
                     {
-                        Console.WriteLine(verifyInput.Item2);
+                        DisplayStatus(verifyInput.Item2, ConsoleColor.Red);
                     }
                 }
 
@@ -143,11 +147,11 @@ namespace LordsOfArda
                     }
                     else if (!success)
                     {
-                        Console.WriteLine("You must provide a real number!");
+                        DisplayStatus("Error: You must provide a real number!", ConsoleColor.Red);
                     }
                     else
                     {
-                        Console.WriteLine("That number is outside of the allowed range");
+                        DisplayStatus("Error: That number is outside of the allowed range", ConsoleColor.Red);
                     }
                 }
             }
@@ -164,6 +168,16 @@ namespace LordsOfArda
                 return (false, $"You can maximum enter {maxLength} characters");
             }
             return (true, "Success!");
+        }
+
+        public static void DisplayStatus(string message, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.WriteLine($"\n{message}");
+            Console.ResetColor();
+            Console.WriteLine("Click any key to continue...");
+            Console.ReadKey();
+
         }
     }
 }
