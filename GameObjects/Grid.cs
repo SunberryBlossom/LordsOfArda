@@ -113,7 +113,7 @@ namespace LordsOfArda.GameObjects
             // If object wants to move to the right, check if there is any object there in the way
             if (oldX-obj.X == -1 && oldY == obj.Y)
             {
-                // Check every object to the right with the width of character to see if they are walkable
+                // Check every object to the right with the width to see if they are walkable.
                 bool walkable = Enumerable.Range(0, obj.Width + 1).All(offset => GridArray[obj.Y, obj.X + offset].All(item => item.IsWalkable));
                 return walkable;
             }
@@ -121,8 +121,8 @@ namespace LordsOfArda.GameObjects
             else if (oldX - obj.X == 1 && oldY == obj.Y)
             {
                 // Check if there is an object in the list layer that has IsWalkable == false.
-                bool charOne = GridArray[obj.Y, obj.X - obj.Width].All(item => item.IsWalkable);
-                return charOne;
+                bool walkable = Enumerable.Range(0, obj.Width + 1).All(offset => GridArray[obj.Y, obj.X - offset].All(item => item.IsWalkable));
+                return walkable;
             }
             // If object wants to move up or down, check if there is any object there in the way
             else if (oldY - obj.Y != 0 && oldX == obj.X)
