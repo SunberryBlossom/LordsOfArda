@@ -20,7 +20,7 @@ namespace LordsOfArda
             bool isContinue = true;
             while (isContinue)
             {
-                StartMenuOptions selectedOption = Menu.ReadOption<StartMenuOptions>(logo, mainMenuOptions);
+                StartMenuOptions selectedOption = Menu.ReadOption<string,StartMenuOptions>(logo, mainMenuOptions);
                 switch (selectedOption)
                 {
                     case StartMenuOptions.NewGame:
@@ -81,12 +81,12 @@ namespace LordsOfArda
             SaveMaster saveMaster = new SaveMaster();
             // Display list of save folders, lets user choose one to load
             string[] saveDirectories = Directory.GetDirectories(@".\Saves");
-            int chosenDirectoryIndex = Menu.ReadOption("Which character would you like to load save files from?",saveDirectories.Select(item => Path.GetFileName(item)).ToArray());
+            int chosenDirectoryIndex = Menu.ReadOptionIndex("Which character would you like to load save files from?",saveDirectories.Select(item => Path.GetFileName(item)).ToArray());
             string chosenDirectory = saveDirectories[chosenDirectoryIndex];
 
             // Display save files within the save folder to load from
             string[] saveFiles = Directory.GetFiles(chosenDirectory);
-            int chosenFileIndex = Menu.ReadOption("Which save file would you like to load?", saveFiles.Select(item => Path.GetFileName(item)).ToArray());
+            int chosenFileIndex = Menu.ReadOptionIndex("Which save file would you like to load?", saveFiles.Select(item => Path.GetFileName(item)).ToArray());
             string chosenFile = saveFiles[chosenFileIndex];
             
             // Load game data
