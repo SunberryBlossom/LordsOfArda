@@ -125,10 +125,36 @@ namespace LordsOfArda.GameObjects
                 return walkable;
             }
             // If object wants to move up or down, check if there is any object there in the way
-            else if (oldY - moveableObj.Y != 0 && oldX == moveableObj.X)
+            else if (oldY - moveableObj.Y == -1 && oldX == moveableObj.X)
+            {
+                // Grab all gameobjects on coordinate below
+                List<GameObject>[] objectsBelow = Enumerable.Range(0,GridArray.GetLength(0)).Select(item => GridArray[moveableObj.Y,item]).ToArray();
+                // Check every gameobject if their width correlates with coordinates for player, if it does return bool as false
+                for (int i = 0; i < objectsBelow.Length; i++)
+                {
+                    for (int j = 0; j < objectsBelow[i].Count; j++)
+                    {
+                        var currentObject = objectsBelow[i][j];
+                        Console.WriteLine($"\t\t\t\t\t\tH:{currentObject.X}");
+                        Console.WriteLine($"\t\t\t\t\t\tP:{moveableObj.X}");
+                        Console.ReadLine();
+                        if ((currentObject.X < moveableObj.X && moveableObj.X < currentObject.X + currentObject.Width))
+                        {
+                            // Collision detected return false
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            // If object wants to move up or down, check if there is any object there in the way
+            else if (oldY - moveableObj.Y == 1 && oldX == moveableObj.X)
             {
                 // Checks if all items are walkable, otherwise returns walkable as false
-                bool walkable = Enumerable.Range(0,moveableObj.Width+1).All(offset => GridArray[moveableObj.Y, moveableObj.X + offset].All(item => item.IsWalkable));
+                bool walkable = Enumerable.Range(0, moveableObj.Width + 1).All(offset => GridArray[moveableObj.Y, moveableObj.X + offset].All(item => item.IsWalkable));
                 return walkable;
             }
             return false;
