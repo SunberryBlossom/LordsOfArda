@@ -119,7 +119,7 @@ namespace LordsOfArda.GameObjects
                 {
                     var currentObject = objectsRow[i][j];
                     // Check if player with width applied and the currentObject we are checking inside row with width apllied collides with eachother
-                    if ((moveableObj.X < currentObject.X + currentObject.Width) && (moveableObj.X + moveableObj.Width > currentObject.X) && moveableObj != currentObject)
+                    if ((moveableObj.X < currentObject.X + currentObject.Width) && (moveableObj.X + moveableObj.Width > currentObject.X) && moveableObj != currentObject && !currentObject.IsWalkable)
                     {
                         // Collision detected return false
                         return false;
