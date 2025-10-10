@@ -110,14 +110,15 @@ namespace LordsOfArda.GameObjects
 
         public bool CanMove(GameObject moveableObj, int oldX, int oldY)
         {
-            // Grab all gameobjects on coordinate below
-            List<GameObject>[] objectsBelow = Enumerable.Range(0, GridArray.GetLength(1)).Select(item => GridArray[moveableObj.Y, item]).ToArray();
+            // Grab all gameobjects on current Y axis row
+            List<GameObject>[] objectsRow = Enumerable.Range(0, GridArray.GetLength(1)).Select(item => GridArray[moveableObj.Y, item]).ToArray();
             // Check every gameobject if their width correlates with coordinates for player, if it does return bool as false
-            for (int i = 0; i < objectsBelow.Length; i++)
+            for (int i = 0; i < objectsRow.Length; i++)
             {
-                for (int j = 0; j < objectsBelow[i].Count; j++)
+                for (int j = 0; j < objectsRow[i].Count; j++)
                 {
-                    var currentObject = objectsBelow[i][j];
+                    var currentObject = objectsRow[i][j];
+                    // Check if player with width applied and the currentObject we are checking inside row with width apllied collides with eachother
                     if ((moveableObj.X < currentObject.X + currentObject.Width) && (moveableObj.X + moveableObj.Width > currentObject.X) && moveableObj != currentObject)
                     {
                         // Collision detected return false
