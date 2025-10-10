@@ -110,87 +110,22 @@ namespace LordsOfArda.GameObjects
 
         public bool CanMove(GameObject moveableObj, int oldX, int oldY)
         {
-            // If object wants to move to the right, check if there is any object there in the way
-            if (oldX-moveableObj.X == -1 && oldY == moveableObj.Y)
+            // Grab all gameobjects on coordinate below
+            List<GameObject>[] objectsBelow = Enumerable.Range(0, GridArray.GetLength(1)).Select(item => GridArray[moveableObj.Y, item]).ToArray();
+            // Check every gameobject if their width correlates with coordinates for player, if it does return bool as false
+            for (int i = 0; i < objectsBelow.Length; i++)
             {
-                // Grab all gameobjects on coordinate below
-                List<GameObject>[] objectsBelow = Enumerable.Range(0, GridArray.GetLength(1)).Select(item => GridArray[moveableObj.Y, item]).ToArray();
-                // Check every gameobject if their width correlates with coordinates for player, if it does return bool as false
-                for (int i = 0; i < objectsBelow.Length; i++)
+                for (int j = 0; j < objectsBelow[i].Count; j++)
                 {
-                    for (int j = 0; j < objectsBelow[i].Count; j++)
+                    var currentObject = objectsBelow[i][j];
+                    if ((moveableObj.X < currentObject.X + currentObject.Width) && (moveableObj.X + moveableObj.Width > currentObject.X) && moveableObj != currentObject)
                     {
-                        var currentObject = objectsBelow[i][j];
-                        if ((moveableObj.X < currentObject.X + currentObject.Width) && (moveableObj.X + moveableObj.Width > currentObject.X) && moveableObj != currentObject)
-                        {
-                            // Collision detected return false
-                            return false;
-                        }
+                        // Collision detected return false
+                        return false;
                     }
                 }
-                return true;
             }
-            // If object wants to move to the left, check if there is any object there in the way
-            else if (oldX - moveableObj.X == 1 && oldY == moveableObj.Y)
-            {
-                // Grab all gameobjects on coordinate below
-                List<GameObject>[] objectsBelow = Enumerable.Range(0, GridArray.GetLength(1)).Select(item => GridArray[moveableObj.Y, item]).ToArray();
-                // Check every gameobject if their width correlates with coordinates for player, if it does return bool as false
-                for (int i = 0; i < objectsBelow.Length; i++)
-                {
-                    for (int j = 0; j < objectsBelow[i].Count; j++)
-                    {
-                        var currentObject = objectsBelow[i][j];
-                        if ((moveableObj.X < currentObject.X + currentObject.Width) && (moveableObj.X + moveableObj.Width > currentObject.X) && moveableObj != currentObject)
-                        {
-                            // Collision detected return false
-                            return false;
-                        }
-                    }
-                }
-                return true;
-            }
-            // If object wants to move up or down, check if there is any object there in the way
-            else if (oldY - moveableObj.Y == -1 && oldX == moveableObj.X)
-            {
-                // Grab all gameobjects on coordinate below
-                List<GameObject>[] objectsBelow = Enumerable.Range(0,GridArray.GetLength(1)).Select(item => GridArray[moveableObj.Y,item]).ToArray();
-                // Check every gameobject if their width correlates with coordinates for player, if it does return bool as false
-                for (int i = 0; i < objectsBelow.Length; i++)
-                {
-                    for (int j = 0; j < objectsBelow[i].Count; j++)
-                    {
-                        var currentObject = objectsBelow[i][j];
-                        if ((moveableObj.X < currentObject.X + currentObject.Width) && (moveableObj.X + moveableObj.Width > currentObject.X) && moveableObj != currentObject)
-                        {
-                            // Collision detected return false
-                            return false;
-                        }
-                    }
-                }
-                return true;
-            }
-            // If object wants to move up or down, check if there is any object there in the way
-            else if (oldY - moveableObj.Y == 1 && oldX == moveableObj.X)
-            {
-                // Grab all gameobjects on coordinate below
-                List<GameObject>[] objectsBelow = Enumerable.Range(0, GridArray.GetLength(1)).Select(item => GridArray[moveableObj.Y, item]).ToArray();
-                // Check every gameobject if their width correlates with coordinates for player, if it does return bool as false
-                for (int i = 0; i < objectsBelow.Length; i++)
-                {
-                    for (int j = 0; j < objectsBelow[i].Count; j++)
-                    {
-                        var currentObject = objectsBelow[i][j];
-                        if ((moveableObj.X < currentObject.X + currentObject.Width) && (moveableObj.X + moveableObj.Width > currentObject.X) && moveableObj != currentObject)
-                        {
-                            // Collision detected return false
-                            return false;
-                        }
-                    }
-                }
-                return true;
-            }
-            return false;
+            return true;
         }
 
     }
