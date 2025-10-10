@@ -14,6 +14,7 @@ namespace LordsOfArda.GameObjects.Objects
             Name = name;
             Gender = gender;
             Birthplace = birthplace;
+            Width = 2;
         }
     }
 }

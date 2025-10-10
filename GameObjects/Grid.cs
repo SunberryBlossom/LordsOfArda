@@ -135,20 +135,14 @@ namespace LordsOfArda.GameObjects
                     for (int j = 0; j < objectsBelow[i].Count; j++)
                     {
                         var currentObject = objectsBelow[i][j];
-                        Console.WriteLine($"\t\t\t\t\t\tH:{currentObject.X}");
-                        Console.WriteLine($"\t\t\t\t\t\tP:{moveableObj.X}");
-                        Console.ReadLine();
-                        if ((currentObject.X < moveableObj.X && moveableObj.X < currentObject.X + currentObject.Width))
+                        if ((moveableObj.X < currentObject.X + currentObject.Width) && (moveableObj.X + moveableObj.Width > currentObject.X))
                         {
                             // Collision detected return false
                             return false;
                         }
-                        else
-                        {
-                            return true;
-                        }
                     }
                 }
+                return true;
             }
             // If object wants to move up or down, check if there is any object there in the way
             else if (oldY - moveableObj.Y == 1 && oldX == moveableObj.X)

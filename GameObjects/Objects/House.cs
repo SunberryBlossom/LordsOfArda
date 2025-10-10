@@ -11,7 +11,7 @@ namespace LordsOfArda.GameObjects.Objects
         public override string CharacterSign => "🏠";
         public House(int startX = 1, int startY = 1) : base(startX,startY)
         {
-            Width = 3;
+            Width = 2;
         }
     }
 }
